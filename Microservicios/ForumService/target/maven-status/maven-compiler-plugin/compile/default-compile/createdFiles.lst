@@ -1,0 +1,7 @@
+com\example\ForumService\model\Publicacion.class
+com\example\ForumService\model\Tema.class
+com\example\ForumService\repository\PublicacionRepository.class
+com\example\ForumService\repository\TemaRepository.class
+com\example\ForumService\ForumServiceApplication.class
+com\example\ForumService\controller\TemaController.class
+com\example\ForumService\controller\PublicacionController.class

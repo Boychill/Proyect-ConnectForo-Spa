@@ -1,0 +1,6 @@
+com\example\MediaService\MediaServiceApplication.class
+com\example\MediaService\model\Media$MediaBuilder.class
+com\example\MediaService\model\Media.class
+com\example\MediaService\service\MediaService.class
+com\example\MediaService\repository\MediaRepository.class
+com\example\MediaService\controller\MediaController.class

@@ -1,0 +1,7 @@
+com\example\ReputationService\controller\ReputationController.class
+com\example\ReputationService\repository\PublicacionRepository.class
+com\example\ReputationService\model\Comentario.class
+com\example\ReputationService\service\ReputationService.class
+com\example\ReputationService\repository\ComentarioRepository.class
+com\example\ReputationService\model\Publicacion.class
+com\example\ReputationService\ReputationServiceApplication.class

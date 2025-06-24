@@ -1,0 +1,9 @@
+com\example\UserService\controller\UsuarioController.class
+com\example\UserService\model\Usuario.class
+com\example\UserService\UserServiceApplication.class
+com\example\UserService\security\FiltroJwt.class
+com\example\UserService\security\JwtUtil.class
+com\example\UserService\repository\UsuarioRepository.class
+com\example\UserService\service\UsuarioDetailsServiceImpl.class
+com\example\UserService\security\SeguridadConfig.class
+com\example\UserService\service\UsuarioService.class

@@ -1,0 +1,4 @@
+com\example\SettingsService\model\ConfiguracionUsuario.class
+com\example\SettingsService\controller\ConfiguracionUsuarioController.class
+com\example\SettingsService\repository\ConfiguracionUsuarioRepository.class
+com\example\SettingsService\SettingsServiceApplication.class

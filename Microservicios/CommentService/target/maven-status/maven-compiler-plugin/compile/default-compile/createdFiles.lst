@@ -1,0 +1,4 @@
+com\example\CommentService\CommentServiceApplication.class
+com\example\CommentService\model\Comentario.class
+com\example\CommentService\controller\ComentarioController.class
+com\example\CommentService\repository\ComentarioRepository.class

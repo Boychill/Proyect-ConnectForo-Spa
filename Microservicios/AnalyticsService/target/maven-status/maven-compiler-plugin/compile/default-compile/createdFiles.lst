@@ -1,0 +1,4 @@
+com\example\AnalyticsService\Config\RestTemplateConfig.class
+com\example\AnalyticsService\controller\AnalyticsController.class
+com\example\AnalyticsService\Service\AnalyticsService.class
+com\example\AnalyticsService\AnalyticsServiceApplication.class

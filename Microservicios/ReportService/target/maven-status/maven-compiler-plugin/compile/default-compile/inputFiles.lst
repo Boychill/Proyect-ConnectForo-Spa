@@ -1,0 +1,8 @@
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\controller\ReporteController.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\model\Reporte.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\ReportServiceApplication.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\repository\ReporteRepository.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\security\FiltroJwt.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\security\JwtUtil.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\security\SecurityConfig.java
+D:\ConnectForo-SPA\Microservicios\ReportService\src\main\java\com\example\ReportService\service\ReporteService.java
