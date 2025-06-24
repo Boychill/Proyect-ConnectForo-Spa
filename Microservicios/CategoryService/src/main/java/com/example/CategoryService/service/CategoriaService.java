@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.CategoryService.model.Categoria;
 import com.example.CategoryService.repository.CategoriaRepository;
@@ -35,7 +37,9 @@ public class CategoriaService {
     }
 
     public void eliminarCategoria(Long id) {
-        repository.deleteById(id);
+        Categoria categoria = repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoría no encontrada"));
+        repository.delete(categoria);
     }
 
     public Optional<Categoria> obtenerPorNombre(String nombre) {

@@ -29,23 +29,29 @@ public class CategoriaController {
     }
     
     @GetMapping("/{id}")
-    public Categoria obtenerPorId(@PathVariable Long id) {
-        return service.obtenerPorId(id).orElse(null);
+    public ResponseEntity<Categoria> obtenerPorId(@PathVariable Long id) {
+        return service.obtenerPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
+
     @PutMapping("/{id}")
-    public Categoria actualizar(@PathVariable Long id, @RequestBody Categoria nuevaCategoria) {
-        return service.actualizarCategoria(id, nuevaCategoria);
+    public ResponseEntity<Categoria> actualizar(@PathVariable Long id, @RequestBody Categoria nuevaCategoria) {
+        return service.obtenerPorId(id)
+                .map(c -> ResponseEntity.ok(service.actualizarCategoria(id, nuevaCategoria)))
+                .orElse(ResponseEntity.notFound().build());
     }
-    
+
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        service.eliminarCategoria(id);
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        service.eliminarCategoria(id);  // Lanza excepción si no existe
+        return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/nombre/{nombre}")
     public ResponseEntity<Categoria> obtenerPorNombre(@PathVariable String nombre) {
         return service.obtenerPorNombre(nombre)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    
 }

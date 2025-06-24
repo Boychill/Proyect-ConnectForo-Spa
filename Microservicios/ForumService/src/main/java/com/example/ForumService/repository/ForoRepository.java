@@ -21,4 +21,6 @@ public interface ForoRepository extends JpaRepository<Foro, Long> {
     
     // Recupera un foro por su ID
     Optional<Foro> findById(Long id);
+
+    List<Foro> findByIdUsuario(Long idUsuario);
 }

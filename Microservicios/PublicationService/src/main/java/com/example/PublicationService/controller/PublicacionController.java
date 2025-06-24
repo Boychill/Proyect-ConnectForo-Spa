@@ -38,7 +38,7 @@ public class PublicacionController {
             return new ResponseEntity<>(createdPublication, HttpStatus.CREATED);  // 201 Created
         } catch (ResponseStatusException e) {
             // Manejar la excepción y devolver una respuesta adecuada
-            return new ResponseEntity<>(null, e.getStatus());  // 404 Not Found si no se encuentra el foro
+            return new ResponseEntity<>(null, e.getStatusCode());  // 404 Not Found si no se encuentra el foro
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);  // 400 Bad Request si ocurre otro error
         }
