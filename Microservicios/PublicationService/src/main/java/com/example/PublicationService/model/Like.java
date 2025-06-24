@@ -22,6 +22,5 @@ public class Like {
     private Long publicationId;  // ID de la publicación
     private Long commentId;  // ID del comentario (puede ser null si es un like en publicación)
 
-    // Getters y setters
 }
 

@@ -5,63 +5,89 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.example.PublicationService.Client.MediaClient;
 import com.example.PublicationService.model.Publicacion;
 import com.example.PublicationService.service.PublicacionService;
 
 @RestController
-@RequestMapping("/api/publications")
+@RequestMapping("/publicaciones")
 public class PublicacionController {
 
     @Autowired
-    private PublicacionService publicacionService;
+    private PublicacionService service;
 
-    // Crear una publicación con video o imagen
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PostMapping("/forum/{forumId}")
-    public ResponseEntity<Publicacion> createPublication(@PathVariable Long forumId,
-                                         @RequestParam("file") MultipartFile file,
-                                         @RequestBody Publicacion publication) {
-        try {
-            // Crear la publicación, hacer la llamada al servicio de Media para subir el archivo
-            Publicacion createdPublication = publicacionService.createPublication(forumId, publication, file);
-            return new ResponseEntity<>(createdPublication, HttpStatus.CREATED);  // 201 Created
-        } catch (ResponseStatusException e) {
-            // Manejar la excepción y devolver una respuesta adecuada
-            return new ResponseEntity<>(null, e.getStatusCode());  // 404 Not Found si no se encuentra el foro
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);  // 400 Bad Request si ocurre otro error
+    @Autowired
+    private MediaClient mediaClient;
+
+    @PostMapping
+    public ResponseEntity<?> crear(@RequestPart("publicacion") Publicacion p,
+                                   @RequestPart(value = "archivo", required = false) MultipartFile archivo,
+                                   @RequestHeader("X-User-Id") String userId,
+                                   @RequestHeader("X-Username") String username) {
+        if (p.getTitulo() == null || p.getTitulo().isBlank() || p.getContenido() == null || p.getContenido().isBlank()) {
+            return ResponseEntity.badRequest().body("El título y contenido no pueden estar vacíos.");
         }
+        p.setIdUsuario(Long.parseLong(userId));
+        p.setUsername(username);
+
+        // Subir imagen asociada a la publicación si se incluye un archivo
+        if (archivo != null && !archivo.isEmpty()) {
+            Long mediaId = mediaClient.uploadMedia(archivo);
+            p.setMediaId(mediaId);
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(p));
     }
 
-    // Obtener todas las publicaciones
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Long id,
+                                        @RequestBody Publicacion p,
+                                        @RequestHeader("X-User-Id") String userId,
+                                        @RequestHeader("X-Rol") String rol) {
+        return service.buscarPorId(id).map(pub -> {
+            if (!pub.getIdUsuario().equals(Long.parseLong(userId)) && !(rol.equals("MODERADOR") || rol.equals("ADMIN"))) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No puedes editar esta publicación");
+            }
+            pub.setTitulo(p.getTitulo());
+            pub.setContenido(p.getContenido());
+            return ResponseEntity.ok(service.guardar(pub));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id,
+                                      @RequestHeader("X-User-Id") String userId,
+                                      @RequestHeader("X-Rol") String rol) {
+        return service.buscarPorId(id).map(pub -> {
+            if (!pub.getIdUsuario().equals(Long.parseLong(userId)) && !(rol.equals("MODERADOR") || rol.equals("ADMIN"))) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No puedes eliminar esta publicación");
+            }
+            service.eliminar(id);
+            return ResponseEntity.noContent().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/foro/{idForo}")
+    public ResponseEntity<List<Publicacion>> listarPorForo(@PathVariable Long idForo) {
+        return ResponseEntity.ok(service.listarPorForo(idForo));
+    }
+
     @GetMapping
-    public ResponseEntity<List<Publicacion>> getAllPublications() {
-        List<Publicacion> publicaciones = publicacionService.getAllPublications();
-        return new ResponseEntity<>(publicaciones, HttpStatus.OK);  // 200 OK
+    public ResponseEntity<List<Publicacion>> listarTodas() {
+        return ResponseEntity.ok(service.listarTodas());
     }
 
-    // Obtener publicaciones por foro
-    @GetMapping("/forum/{forumId}")
-    public ResponseEntity<List<Publicacion>> getPublicationsByForum(@PathVariable Long forumId) {
-        List<Publicacion> publicaciones = publicacionService.getPublicationsByForum(forumId);
-        return new ResponseEntity<>(publicaciones, HttpStatus.OK);  // 200 OK
-    }
-
-    // Obtener la URL de la imagen o video asociado a una publicación
-    @GetMapping("/media/{mediaId}")
-    public ResponseEntity<String> getMediaUrl(@PathVariable String mediaId) {
-        String mediaUrl = publicacionService.getMediaUrl(mediaId);
-        return new ResponseEntity<>(mediaUrl, HttpStatus.OK);  // 200 OK
-    }
+    
 }

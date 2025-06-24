@@ -31,6 +31,9 @@ public class Foro {
 
     @Transient
     private String categoriaNombre;
+
+    @Transient
+    private Long idSeguimiento;
 }
 
 

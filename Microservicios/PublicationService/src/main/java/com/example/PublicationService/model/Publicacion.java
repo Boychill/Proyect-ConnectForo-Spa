@@ -19,12 +19,13 @@ public class Publicacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private String content;
+    private String titulo;
+    private String contenido;
 
     private Long forumId;  // Relación con el ID del foro (clave foránea)
 
     private long mediaId;  // URL del archivo multimedia (imagen o video)
 
-    // Getters y setters
+    private Long idUsuario;    // quien creó el foro
+    private String username;
 }

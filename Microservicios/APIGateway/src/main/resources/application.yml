@@ -2,17 +2,46 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: api-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: auth-service
-          uri: http://localhost:8081
+          uri: lb://auth-service
           predicates:
             - Path=/auth/**
-        - id: user-service
-          uri: http://localhost:8082
+
+        - id: category-service
+          uri: lb://category-service
           predicates:
-            - Path=/users/**
-          filters:
-            - JwtAuthenticationFilter
-      
+            - Path=/categorias/**
+
+        - id: forum-service
+          uri: lb://forum-service
+          predicates:
+            - Path=/foros/**
+
+        - id: publication-service
+          uri: lb://publication-service
+          predicates:
+            - Path=/publicaciones/**
+
+        - id: comment-service
+          uri: lb://comment-service
+          predicates:
+            - Path=/comentarios/**
+
+        - id: reputation-service
+          uri: lb://reputation-service
+          predicates:
+            - Path=/likes/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
