@@ -1,7 +1,9 @@
-com\example\ForumService\model\Publicacion.class
-com\example\ForumService\model\Tema.class
-com\example\ForumService\repository\PublicacionRepository.class
-com\example\ForumService\repository\TemaRepository.class
+com\example\ForumService\model\Foro$ForoBuilder.class
+com\example\ForumService\Config\DatosPrecargados.class
+com\example\ForumService\service\ForoService.class
 com\example\ForumService\ForumServiceApplication.class
-com\example\ForumService\controller\TemaController.class
-com\example\ForumService\controller\PublicacionController.class
+com\example\ForumService\repository\ForoRepository.class
+com\example\ForumService\client\CategoriaClient.class
+com\example\ForumService\controller\ForoController.class
+com\example\ForumService\model\Categoria.class
+com\example\ForumService\model\Foro.class

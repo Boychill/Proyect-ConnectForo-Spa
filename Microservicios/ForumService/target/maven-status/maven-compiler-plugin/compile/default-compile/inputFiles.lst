@@ -1,7 +1,8 @@
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\controller\PublicacionController.java
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\controller\TemaController.java
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\ForumServiceApplication.java
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\model\Publicacion.java
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\model\Tema.java
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\repository\PublicacionRepository.java
-C:\Users\Bnjvv\OneDrive\Documentos\GitHub\ConnectForo-SPA\Microservicios\ForumService\src\main\java\com\example\ForumService\repository\TemaRepository.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\client\CategoriaClient.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\Config\DatosPrecargados.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\controller\ForoController.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\ForumServiceApplication.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\model\Categoria.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\model\Foro.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\repository\ForoRepository.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\ForumService\src\main\java\com\example\ForumService\service\ForoService.java

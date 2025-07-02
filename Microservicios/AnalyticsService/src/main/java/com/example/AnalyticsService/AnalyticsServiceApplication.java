@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@Enable
+@Enable
 public class AnalyticsServiceApplication {
 
 	public static void main(String[] args) {
