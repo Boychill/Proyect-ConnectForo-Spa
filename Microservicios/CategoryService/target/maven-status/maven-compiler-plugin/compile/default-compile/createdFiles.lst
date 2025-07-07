@@ -1,7 +1,0 @@
-com\example\CategoryService\model\Categoria.class
-com\example\CategoryService\CategoryServiceApplication.class
-com\example\CategoryService\controller\CategoriaController.class
-com\example\CategoryService\config\DatosPrecargados.class
-com\example\CategoryService\model\Categoria$CategoriaBuilder.class
-com\example\CategoryService\repository\CategoriaRepository.class
-com\example\CategoryService\service\CategoriaService.class
