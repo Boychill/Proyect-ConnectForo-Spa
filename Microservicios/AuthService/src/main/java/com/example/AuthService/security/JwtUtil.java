@@ -1,58 +1,73 @@
 package com.example.AuthService.security;
 
+import com.example.AuthService.model.entity.Usuarios;
 import io.jsonwebtoken.*;
-import lombok.RequiredArgsConstructor;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Component;
 
-import com.example.AuthService.model.entity.Usuarios;
-
-import java.time.Duration;
-import java.time.Instant;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
-
 public class JwtUtil {
-    private final String secretKey;
-    private final Duration expiration;
+
+    private final String SECRET_KEY = "mi-clave-secreta-super-segura-y-larga-123456"; // 256 bits recomendado
+    private final long EXPIRATION_MS = 1000 * 60 * 60 * 10; // 10 horas
+
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
 
     public String generarToken(Usuarios usuario) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", usuario.getUsername());
+        claims.put("correo", usuario.getCorreo());
+        claims.put("role", usuario.getRol().name());
+
         return Jwts.builder()
-            .setSubject(usuario.getId().toString())
-            .setIssuedAt(new Date())
-            .setExpiration(Date.from(Instant.now().plus(expiration)))
-            .claim("username", usuario.getUsername())
-            .claim("email", usuario.getCorreo())
-            .claim("role", usuario.getRol().name())
-            .signWith(SignatureAlgorithm.HS256, secretKey)
-            .compact();
+                .setClaims(claims)
+                .setSubject(usuario.getId().toString())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    public String extractUsername(String token) {
+    private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-            .setSigningKey(secretKey)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
-    public boolean isValid(String token) {
+    public boolean validarToken(String token) {
         try {
-            Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token);
+            extractAllClaims(token);
             return true;
         } catch (JwtException e) {
-            log.error("Token JWT inválido: {}", e.getMessage());
+            log.error("Token inválido: {}", e.getMessage());
             return false;
         }
+    }
+
+    public String getUserId(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    public String getUsername(String token) {
+        return extractAllClaims(token).get("username", String.class);
+    }
+
+    public String getCorreo(String token) {
+        return extractAllClaims(token).get("correo", String.class);
+    }
+
+    public String getRol(String token) {
+        return extractAllClaims(token).get("role", String.class);
     }
 }

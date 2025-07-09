@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RegistroResponse {
     private String token;
-    
+
     public RegistroResponse(String token) {
         this.token = token;
     }

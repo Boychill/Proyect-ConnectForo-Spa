@@ -1,12 +1,13 @@
 package com.example.CategoryService.controller;
 
+import com.example.CategoryService.model.Categoria;
+import com.example.CategoryService.service.CategoriaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.CategoryService.model.Categoria;
-import com.example.CategoryService.service.CategoriaService;
 import java.util.List;
 
 @RestController
@@ -16,8 +17,7 @@ public class CategoriaController {
     @Autowired
     private CategoriaService service;
 
-     //Anotacion para que conlleve la seguridad de los endpoints segunlos roles
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERADOR')")
     @PostMapping
     public Categoria crear(@RequestBody Categoria categoria) {
         return service.crearCategoria(categoria);
@@ -27,7 +27,7 @@ public class CategoriaController {
     public List<Categoria> listar() {
         return service.obtenerTodas();
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> obtenerPorId(@PathVariable Long id) {
         return service.obtenerPorId(id)
@@ -35,6 +35,7 @@ public class CategoriaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERADOR')")
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> actualizar(@PathVariable Long id, @RequestBody Categoria nuevaCategoria) {
         return service.obtenerPorId(id)
@@ -42,9 +43,10 @@ public class CategoriaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        service.eliminarCategoria(id);  // Lanza excepción si no existe
+        service.eliminarCategoria(id);
         return ResponseEntity.noContent().build();
     }
 

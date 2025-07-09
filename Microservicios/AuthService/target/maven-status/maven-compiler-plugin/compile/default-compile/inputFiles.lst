@@ -1,0 +1,12 @@
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\model\entity\Usuarios.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\AuthServiceApplication.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\security\JwtUtil.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\config\DatosPrecargados.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\config\SeguridadConfig.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\controller\AutenticacionControlador.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\model\dto\RegistroRequest.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\model\entity\Rol.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\repository\UsuariosRepository.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\service\ServicioAutenticacion.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\model\dto\LoginRequest.java
+C:\Users\Administrator\Documents\GitHub\Mi-Proyecto-ConnectForo-SPA\Proyect-ConnectForo-Spa\Microservicios\AuthService\src\main\java\com\example\AuthService\security\FiltroJwt.java

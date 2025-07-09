@@ -4,64 +4,50 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.example.AuthService.service.UserDetailsServiceImpl;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import org.springframework.util.StringUtils;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class FiltroJwt extends OncePerRequestFilter {
-    private final JwtUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
 
-    public FiltroJwt(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-    }
+    private final JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                                  HttpServletResponse response, 
-                                  FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String jwt = obtenerToken(request);
-            if (jwt != null && jwtUtil.isValid(jwt)) {
-                String username = jwtUtil.extractUsername(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                
-                UsernamePasswordAuthenticationToken authentication = 
-                    new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                    );
-                
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        } catch (Exception e) {
-            log.error("Error en la autenticación: {}", e.getMessage());
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+                                    throws ServletException, IOException {
+
+        final String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
             return;
         }
-        
-        filterChain.doFilter(request, response);
-    }
 
-    private String obtenerToken(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7);
+        final String token = authHeader.substring(7);
+
+        if (!jwtUtil.validarToken(token)) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return;
         }
-        return null;
+
+        // Datos extraídos del token (para logging o futuro contexto)
+        String userId = jwtUtil.getUserId(token);
+        String username = jwtUtil.getUsername(token);
+        String correo = jwtUtil.getCorreo(token);
+        String rol = jwtUtil.getRol(token);
+
+        log.debug("Token válido de usuario: {} ({}) con rol {}", username, correo, rol);
+
+        // A futuro: aquí podrías usar SecurityContextHolder para autenticar
+        filterChain.doFilter(request, response);
     }
 }

@@ -1,55 +1,41 @@
 package com.example.AuthService.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "usuarios")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Usuarios {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(unique = true)
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    private String username;
-    
-    @Column(unique = true)
-    @NotBlank(message = "El correo es obligatorio")
-    @Email(message = "El correo debe ser válido")
+
     private String correo;
-    
-    @NotBlank(message = "La contraseña es obligatoria")
     private String clave;
-    
-    @Enumerated(EnumType.STRING)
+    private String username;
     private Rol rol;
-    
     private String nombre;
     private String biografia;
     private String fotoPerfil;
-    
-    @Column(name = "activo")
-    private Boolean activo = true;
+    private Boolean activo;
     
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
-    
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
-        name = "usuario_rol",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "rol_id")
-    )
-    private Set<Rol> roles = new HashSet<>();
+      name = "usuario_rol", 
+      joinColumns = @JoinColumn(name = "usuario_id"), 
+      inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> roles;
+
 }

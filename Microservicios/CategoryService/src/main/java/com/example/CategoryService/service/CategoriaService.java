@@ -1,15 +1,15 @@
 package com.example.CategoryService.service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.CategoryService.model.Categoria;
+import com.example.CategoryService.repository.CategoriaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.CategoryService.model.Categoria;
-import com.example.CategoryService.repository.CategoriaRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaService {
@@ -17,8 +17,11 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository repository;
 
-    public Categoria crearCategoria(Categoria category) {
-        return repository.save(category);
+    public Categoria crearCategoria(Categoria categoria) {
+        if (repository.findByNombre(categoria.getNombre()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una categoría con ese nombre");
+        }
+        return repository.save(categoria);
     }
 
     public List<Categoria> obtenerTodas() {
@@ -33,7 +36,8 @@ public class CategoriaService {
         return repository.findById(id).map(cat -> {
             cat.setNombre(nuevaCategoria.getNombre());
             return repository.save(cat);
-        }).orElse(null);
+        }).orElseThrow(() ->
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoría no encontrada"));
     }
 
     public void eliminarCategoria(Long id) {
