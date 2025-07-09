@@ -2,27 +2,24 @@ package com.example.AuthService.controller;
 
 import com.example.AuthService.model.dto.RegistroRequest;
 import com.example.AuthService.model.dto.RegistroResponse;
-import com.example.AuthService.security.JwtUtil;
-import com.example.AuthService.config.ExcepcionesPersonalizadas;
 import com.example.AuthService.model.dto.LoginRequest;
 import com.example.AuthService.model.dto.LoginResponse;
 import com.example.AuthService.service.ServicioAutenticacion;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class AuthController {
+public class AutenticacionControlador {
     private final ServicioAutenticacion servicioAutenticacion;
     
     @Autowired
-    public AuthController(ServicioAutenticacion servicioAutenticacion) {
+    public AutenticacionControlador(ServicioAutenticacion servicioAutenticacion) {
         this.servicioAutenticacion = servicioAutenticacion;
     }
     
